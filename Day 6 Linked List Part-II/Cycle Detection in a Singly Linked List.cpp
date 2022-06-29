@@ -32,3 +32,4 @@ bool detectCycle(Node *head)
     }
     return false;
 }
+
