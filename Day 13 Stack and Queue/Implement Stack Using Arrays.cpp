@@ -189,26 +189,24 @@ bool compare(const pair<ll, ll>&i, const pair<ll, ll>&j)
 
 //------------------------------------------------------------------------------ Data Structres ---------------------------------------------------------------------------------
 
-//--------------------------Stack------------------------------------
+//--------------------------Stack using array------------------------------------
 
 class Stack
 {
     private:
-        vector<ll> vect;
+        ll vect[100000];
         ll ind;
         ll n;
     public:    
         Stack(ll size)
         {
             n = size;
-            vector<ll> temp(n);
             ind = -1;
-            vect = temp;
         }
         
         bool isFull()
         {
-            return ind==vect.size()-1;
+            return ind==n-1;
         }
 
         bool isEmpty()
