@@ -11,7 +11,7 @@ int ninjaAndLadoos(vector<int> &row1, vector<int> &row2, int m, int n, int k) {
     while(start<=end)
     {
         ll cut1 = start + (end-start)/2;
-        ll cut2 = min(k - cut1,n2);
+        ll cut2 = k - cut1;
         ll l1 = (cut1==0)?-1e9:row1[cut1-1];
         ll r1 = (cut1==n1)?1e9:row1[cut1];
         ll l2 = (cut2==0)?-1e9:row2[cut2-1];
