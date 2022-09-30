@@ -5,37 +5,33 @@
 #define MOD 1000000007
 
 
-vector<int> stringMatch(string &str, string &pat) {
-    ll d = 26;
-    ll p = MOD;
-    ll hashPat = 0;
-    ll hashStr = 0;
-    for(ll i=0;i<pat.length();i++)
-    {
-        hashPat *=d;
-        hashPat += (pat[i]-'A' + 1)%p;
-    }
-    ll start = 0, end = 0;
-    vector<int> ans;
-    while(end<str.length())
-    {
-        hashStr *= d;
-        hashStr += (str[end]-'A'+1)%p;
-        if(end-start+1==pat.length())
+vector<int> stringMatch(string &str, string &p) {
+        ll d = 26;
+        ll r = 5381;
+        ll hashPat = 0;
+        ll hashStr = 0;
+        ll n = str.length();
+        ll m = p.length();
+        vector<int> ans;
+        for(ll i=0;i<m;i++)
+            hashPat = (hashPat*d + (p[i]-'A'+1))%r;
+        ll start = 0, end = 0;
+        ll op = 1;
+        for(ll i=0;i<m-1;i++)
+            op = (op*d)%r;
+        while(end<n)
         {
-            if(hashStr==hashPat)
+            if(hashStr<0)
+                hashStr += r;
+            hashStr = (hashStr*d + (str[end] -'A' + 1))%r;
+            if(end-start+1==m)
             {
-                ll flag =1;
-                for(ll k=0;k<pat.length();k++)
-                    if(pat[k]!=str[start+k])
-                        flag=0;
-                if(flag)
+                if(hashStr==hashPat and str.substr(start,m)==p)
                     ans.push_back(start);
+                hashStr = (hashStr - (str[start]-'A' + 1)*op)%r;
+                start++;
             }
-            hashStr -= (((str[start] -'A'+1))*pow(d,end-start));
-            start++;
+            end++;
         }
-        end++;
-    }
-    return ans;
+        return ans;
 }
