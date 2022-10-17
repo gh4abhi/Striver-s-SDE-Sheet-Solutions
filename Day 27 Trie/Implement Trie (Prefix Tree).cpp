@@ -2,32 +2,24 @@
 
 #define ll int
 
-/*
-    Your Trie object will be instantiated and called as such:
-    Trie* obj = new Trie();
-    obj->insert(word);
-    bool check2 = obj->search(word);
-    bool check3 = obj->startsWith(prefix);
- */
-
-struct Node
+struct node
 {
-    Node* links[26];
+    node* links[26];
     bool flag = false;
     
     bool containsKey(char ch)
     {
-        return links[ch-'a'] != nullptr;
+        return links[ch-'a']!=nullptr;
     }
     
-    void put(char ch, Node* node)
+    void put(char ch, node* cur)
     {
-        links[ch-'a'] = node;
+        links[ch-'a'] = cur;
     }
     
-    Node* get(char ch)
+    node* get(char ch)
     {
-        return links[ch-'a'];
+        return links[ch-'a'];      
     }
     
     void setEnd()
@@ -39,55 +31,54 @@ struct Node
     {
         return flag;
     }
-    
 };
 
 class Trie {
-
 private:
-    
-    Node* root;
-    
+    node* root;
 public:
-
-    /** Initialize your data structure here. */
     Trie() {
-        root = new Node();
+        root = new node();
     }
-
-    /** Inserts a word into the trie. */
+    
     void insert(string word) {
-        Node* node = root;
-        for(auto i:word)
+        node* cur = root;
+        for(ll i=0;i<word.length();i++)
         {
-            if(!node->containsKey(i))
-                node->put(i,new Node());
-            node = node->get(i);
+            if(!cur->containsKey(word[i]))
+                cur->put(word[i],new node());
+            cur = cur->get(word[i]);
         }
-        node->setEnd();
+        cur->setEnd();
     }
-
-    /** Returns if the word is in the trie. */
+    
     bool search(string word) {
-        Node* node = root;
-        for(auto i:word)
+        node* cur = root;
+        for(ll i=0;i<word.length();i++)
         {
-            if(!node->containsKey(i))
+            if(!cur->containsKey(word[i]))
                 return false;
-            node = node->get(i);
+            cur = cur->get(word[i]);
         }
-        return node->isEnd();
+        return cur->isEnd();
     }
-
-    /** Returns if there is any word in the trie that starts with the given prefix. */
+    
     bool startsWith(string prefix) {
-        Node* node = root;
-        for(auto i:prefix)
+        node* cur = root;
+        for(ll i=0;i<prefix.length();i++)
         {
-            if(!node->containsKey(i))
+            if(!cur->containsKey(prefix[i]))
                 return false;
-            node = node->get(i);
+            cur = cur->get(prefix[i]);
         }
-        return true;
+        return true;        
     }
 };
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
