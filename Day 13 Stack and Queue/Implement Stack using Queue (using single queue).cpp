@@ -320,13 +320,13 @@ void io(ll r)
 }
 //------------------------------------------------------------------Code--------------------------------------------------------------------------------------------
  
-class StackWithTwoQueues
+class StackWithOneQueue
 {
     private:
         queue<ll> q;
         ll sz;
     public:
-        StackWithTwoQueues()
+        StackWithOneQueue()
         {
             sz = 0;
         }
